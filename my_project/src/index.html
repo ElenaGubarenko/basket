@@ -1,45 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Webpack Starter Kit</title>
 
-    <!-- Don't forget to delete this style tag. -->
-    <style>
-      body {
-        min-height: 100vh;
-        margin: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basket</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
-      .intro {
-        text-align: center;
-      }
+</head>
 
-      .intro h1 {
-        margin-top: 0;
-        font-weight: 500;
-        font-size: 40px;
-      }
+<body>
+  <div class="container">
+    <section class="header">
+      <div class="header-nav">
+        <span class="header-nav-img material-icons">
+          sentiment_satisfied_alt
+        </span>
+        <button class="header-nav-button-basket material-icons" type="button">
+          shopping_basket
+          <span class="memes-basket"><br>MEMES<br>BASKET</span>
+        </button>
+        <div class="current-number"></div>
+      </div>
+    </section>
 
-      .intro img {
-        display: block;
-        max-width: 100%;
-        height: auto;
-      }
-    </style>
-  </head>
+    <section class="main">
+      <div class="main-img-cards">
 
-  <body>
-    <article class="intro">
-      <h1>Webpack starter kit</h1>
+      </div>
+    </section>
+  </div>
 
-      <!-- HTML image reference example. -->
-      <img src="./images/intro.png" alt="" width="640" />
-    </article>
-  </body>
+  <div class="basket-modal">
+    <div class="modal-overlay">
+      <div class="basket-modal-content">
+
+      </div>
+
+      <button class="modal-close material-icons" type="button">close</button>
+    </div>
+  </div>
+</body>
+
 </html>
