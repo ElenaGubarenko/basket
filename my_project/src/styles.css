@@ -19,7 +19,8 @@ body {
 .header-nav {
   position: relative;
   display: flex;
-  max-height: 200px;
+  height: 120px;
+  max-width: 1200px;
   margin-bottom: 15px;
 }
 
@@ -46,6 +47,10 @@ body {
 }
 
 .header-nav-button-basket {
+  /* position: fixed;
+  top: 3%;
+  right: 3%; */
+
   margin: 0;
   width: 100px;
   height: 100px;
@@ -105,10 +110,6 @@ body {
   flex-wrap: wrap;
   justify-content: center;
 }
-
-/* .material-icons {
-  color: var(--main-color);
-} */
 
 .meme-card {
   max-width: 450px;
@@ -240,8 +241,19 @@ body {
   background-color: var(--hover-color);
 }
 
+.clear-basket {
+  top: 30%;
+  font-size: 17px;
+}
+
 .basket-img {
   width: 250px;
   height: 250px;
   object-fit: cover;
+}
+
+.modal-img-item {
+  list-style: none;
+  margin: 15 15 0 0;
+  padding: 0;
 }

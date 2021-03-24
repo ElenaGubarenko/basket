@@ -1,5 +1,3 @@
-// сделать чтобы лайк и дизлайк нельзя было нажать дважды один и тот же
-
 import './styles.css';
 import template from './hbs_files/headTemplate.hbs';
 
@@ -12,31 +10,21 @@ const basketModal = document.querySelector('.basket-modal');
 const closeModal = document.querySelector('.modal-close');
 const currentLikesRef = document.querySelector('.current-number');
 const basketModalContent = document.querySelector('.basket-modal-content');
+const claerBasketRef = document.querySelector('.clear-basket');
 let currentLikes = 0;
-const arrOfImgUrl = {
-  imgs: [],
-};
-
 let localStorageValue = localStorage.getItem('numberOfLikes');
 currentLikesRef.innerHTML = localStorageValue;
+let arrOfImgUrl = {
+  urls: [],
+};
 
 fetch(`${BASE_URL}`)
   .then(response => {
     return response.json();
   })
   .then(answer => {
-    const arr = answer.data.memes;
-
-    // const templatedAnswer = template(arr[5]);
-    // mainImgCardRef.insertAdjacentHTML('afterbegin', templatedAnswer);
-
-    // const likeRef = document.querySelector('.like');
-    // const dislikeRef = document.querySelector('.dislike');
-    // const addToBasket = document.querySelector('.add-to-basket');
-
-    // likeRef.addEventListener('click', addLike);
-    // dislikeRef.addEventListener('click', deleteLike);
-    // addToBasket.addEventListener('click', addToBasketFunc);
+    const newArr = answer.data.memes;
+    const arr = newArr.slice(4, 50);
 
     arr.forEach(element => {
       const templatedAnswer = template(element);
@@ -52,6 +40,14 @@ fetch(`${BASE_URL}`)
     });
   });
 
+const getLocalStorageValue = () => {
+  let urls = localStorage.getItem('imgsUrls');
+  const parsedUrls = JSON.parse(urls);
+  const lastArrOfUrls = parsedUrls.urls;
+  arrOfImgUrl.urls = lastArrOfUrls;
+  console.log(arrOfImgUrl);
+};
+
 const openBasket = event => {
   basketModal.classList.add('is-open');
 };
@@ -62,11 +58,34 @@ const closeBasket = event => {
   }
 };
 
+const addToBasketFunc = event => {
+  const settings = {
+    targetImg: `${event.path[2].children[0].src}`,
+  };
+  arrOfImgUrl.urls.push(settings.targetImg);
+  localStorage.setItem('imgsUrls', JSON.stringify(arrOfImgUrl));
+
+  getLocalStorageValue();
+};
+getLocalStorageValue();
+
+const createBasketContent = () => {
+  arrOfImgUrl.urls.forEach(element =>
+    basketModalContent.insertAdjacentHTML(
+      'afterbegin',
+      `<li class="modal-img-item"><img class="basket-img" src=${element} alt=""></li>`,
+    ),
+  );
+};
+
+createBasketContent();
+
 const addLike = event => {
   if (event) {
     currentLikes += 1;
     currentLikesRef.innerHTML = currentLikes;
     localStorage.setItem('numberOfLikes', `${currentLikes}`);
+    event.target.disabled = true;
   }
 };
 
@@ -75,32 +94,8 @@ const deleteLike = event => {
     currentLikes -= 1;
     currentLikesRef.innerHTML = currentLikes;
     localStorage.setItem('numberOfLikes', `${currentLikes}`);
+    event.target.disabled = true;
   }
-};
-
-const addToBasketFunc = event => {
-  const settings = {
-    targetImg: `${event.path[2].children[0].src}`,
-  };
-
-  // basketModalContent.insertAdjacentHTML(
-  //   'afterbegin',
-  //   `<img class="basket-img" src=${settings.targetImg} alt="">`,
-  // );
-
-  arrOfImgUrl.imgs.push(settings.targetImg);
-  localStorage.setItem('imgsUrls', JSON.stringify(arrOfImgUrl));
-  event.target.disabled = true;
-
-  // const urls = localStorage.getItem('imgsUrls');
-  // const parsedUrls = JSON.parse(urls);
-  // const lastArrOfUrls = parsedUrls.imgs;
-  // lastArrOfUrls.forEach(element =>
-  //   basketModalContent.insertAdjacentHTML(
-  //     'afterbegin',
-  //     `<img class="basket-img" src=${element} alt="">`,
-  //   ),
-  // );
 };
 
 const savedQuantity = () => {
@@ -110,18 +105,12 @@ const savedQuantity = () => {
 };
 savedQuantity();
 
-const createBasketContent = () => {
-  const urls = localStorage.getItem('imgsUrls');
-  const parsedUrls = JSON.parse(urls);
-  const lastArrOfUrls = parsedUrls.imgs;
-  lastArrOfUrls.forEach(element =>
-    basketModalContent.insertAdjacentHTML(
-      'afterbegin',
-      `<img class="basket-img" src=${element} alt="">`,
-    ),
-  );
+const clearBasket = () => {
+  basketModalContent.innerHTML = ' ';
+  localStorage.setItem('imgsUrls', []);
+  arrOfImgUrl.urls = [];
 };
-createBasketContent();
 
 basketRef.addEventListener('click', openBasket);
 closeModal.addEventListener('click', closeBasket);
+claerBasketRef.addEventListener('click', clearBasket);
