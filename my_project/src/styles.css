@@ -195,6 +195,7 @@ body {
 
 .modal-overlay {
   position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   width: 100vw;
@@ -242,7 +243,7 @@ body {
 }
 
 .clear-basket {
-  top: 30%;
+  top: 130px;
   font-size: 17px;
 }
 

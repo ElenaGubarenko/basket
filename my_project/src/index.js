@@ -47,6 +47,7 @@ const getLocalStorageValue = () => {
   arrOfImgUrl.urls = lastArrOfUrls;
   console.log(arrOfImgUrl);
 };
+getLocalStorageValue();
 
 const openBasket = event => {
   basketModal.classList.add('is-open');
@@ -64,10 +65,10 @@ const addToBasketFunc = event => {
   };
   arrOfImgUrl.urls.push(settings.targetImg);
   localStorage.setItem('imgsUrls', JSON.stringify(arrOfImgUrl));
-
   getLocalStorageValue();
+
+  createBasketContent();
 };
-getLocalStorageValue();
 
 const createBasketContent = () => {
   arrOfImgUrl.urls.forEach(element =>
@@ -78,7 +79,7 @@ const createBasketContent = () => {
   );
 };
 
-createBasketContent();
+// createBasketContent();
 
 const addLike = event => {
   if (event) {
@@ -103,6 +104,7 @@ const savedQuantity = () => {
     currentLikes = parseInt(localStorageValue);
   }
 };
+
 savedQuantity();
 
 const clearBasket = () => {
