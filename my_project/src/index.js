@@ -41,13 +41,15 @@ fetch(`${BASE_URL}`)
   });
 
 const getLocalStorageValue = () => {
+  if (localStorage.getItem('imgsUrls') === null) {
+    localStorage.setItem('imgsUrls', []);
+  }
   let urls = localStorage.getItem('imgsUrls');
   const parsedUrls = JSON.parse(urls);
   const lastArrOfUrls = parsedUrls.urls;
   arrOfImgUrl.urls = lastArrOfUrls;
   console.log(arrOfImgUrl);
 };
-getLocalStorageValue();
 
 const openBasket = event => {
   basketModal.classList.add('is-open');
@@ -59,6 +61,8 @@ const closeBasket = event => {
   }
 };
 
+getLocalStorageValue();
+
 const addToBasketFunc = event => {
   const settings = {
     targetImg: `${event.path[2].children[0].src}`,
@@ -66,7 +70,6 @@ const addToBasketFunc = event => {
   arrOfImgUrl.urls.push(settings.targetImg);
   localStorage.setItem('imgsUrls', JSON.stringify(arrOfImgUrl));
   getLocalStorageValue();
-
   createBasketContent();
 };
 
@@ -78,8 +81,6 @@ const createBasketContent = () => {
     ),
   );
 };
-
-// createBasketContent();
 
 const addLike = event => {
   if (event) {
