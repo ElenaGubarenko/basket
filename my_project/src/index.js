@@ -42,6 +42,8 @@ fetch(`${BASE_URL}`)
 
 const openBasket = event => {
   basketModal.classList.add('is-open');
+  saveStorageUrls();
+  createBasketContent();
 };
 
 const closeBasket = event => {
@@ -50,22 +52,29 @@ const closeBasket = event => {
   }
 };
 
-const addToBasketFunc = event => {
-  const targetImg = event.path[2].children[0].src;
-
+const saveStorageUrls = () => {
   if (localStorage.getItem('arrOfUrls')) {
     const getItem = localStorage.getItem('arrOfUrls');
     const parsedGetItem = JSON.parse(getItem);
     arrOfImgUrl.urls = parsedGetItem;
   }
+};
+
+const addToBasketFunc = event => {
+  const targetImg = event.path[2].children[0].src;
+  saveStorageUrls();
   arrOfImgUrl.urls.push(targetImg);
   localStorage.setItem('arrOfUrls', JSON.stringify(arrOfImgUrl.urls));
+  // createBasketContent();
+};
+
+const createBasketContent = () => {
   console.log(arrOfImgUrl.urls);
+  basketModalContent.innerHTML = ' ';
   arrOfImgUrl.urls.forEach(element => {
-    console.log(element);
     basketModalContent.insertAdjacentHTML(
       'afterbegin',
-      `<img class="basket-img " src=${element}>`,
+      `<img class="basket-img " src="${element}">`,
     );
   });
 };
